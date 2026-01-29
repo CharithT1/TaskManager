@@ -1,0 +1,49 @@
+<form [formGroup]="createTaskForm" (submit)="onSubmit()">
+    <div class="mb-3">
+        <mat-form-field appearance="outline">
+            <mat-label>Task Name</mat-label>
+            <input matInput formControlName="name" maxlength="100" class="form-control form-control-lg">
+            <mat-error class="error-msg">required</mat-error>
+        </mat-form-field>
+    </div>
+    <div class="mb-3">
+        <mat-form-field fxFlex="calc(50% - 15px)">
+            <mat-label>Task Type</mat-label>
+            <mat-select formControlName="taskTypeId" class="form-control form-control-lg">
+                <mat-option *ngFor="let item of taskTypeListList" [value]="item.id">
+                    {{item.name}}
+                </mat-option>
+            </mat-select>
+            <mat-error
+                *ngIf="(createTaskForm.get('taskTypeId')?.touched && createTaskForm.get('taskTypeId')?.invalid && createTaskForm.get('taskTypeId')?.errors?.['required'])">Required</mat-error>
+        </mat-form-field>
+    </div>
+    <div class="mb-3">
+        <mat-form-field>
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description" maxlength="100"
+                class="form-control form-control-lg"></textarea>
+            <mat-error class="error-msg">required</mat-error>
+        </mat-form-field>
+    </div>
+    <div class="mb-3">
+        <label>Start Date</label>
+        <mat-form-field>
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="startDatePicker" formControlName="startDate" name="startDate">
+            <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #startDatePicker></mat-datepicker>
+        </mat-form-field>
+
+    </div>
+    <div class="mb-3">
+        <label>End Date</label>
+        <mat-form-field appearance="fill">
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="endDatePicker" formControlName="endDate" name="endDate">
+            <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #endDatePicker></mat-datepicker>
+        </mat-form-field>
+    </div>
+    <div class="d-grid"><button class="btn btn-lg btn-success" type="submit">Submit</button></div>
+</form>
