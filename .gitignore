@@ -1,3 +1,6 @@
 
 /.vs
 /TaskManagement.API/bin/Debug/net8.0
+/TaskManagement.Application/bin/Debug/net8.0
+/TaskManagement.Domain/bin/Debug/net8.0
+/TaskManagement.Persistance/bin/Debug/net8.0
