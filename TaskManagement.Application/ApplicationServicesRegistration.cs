@@ -1,13 +1,10 @@
 ﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using TaskManagement.Application.Configurations;
-using TaskManagement.Application.Profiles;
+using TaskManagement.Application.Common;
+using TaskManagement.Application.Mappers;
+using TaskManagement.Application.Responses;
+using FluentValidation.Results;
 
 namespace TaskManagement.Application
 {
@@ -17,7 +14,8 @@ namespace TaskManagement.Application
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
-
+            services.AddSingleton<IMapper<ValidationResult, BaseCommandResponse>, ServiceErrorMapper>();
+            services.AddSingleton<IMapper<int, BaseCommandResponse>,ServiceSuccessMapper>();
             return services;
         }   
     }

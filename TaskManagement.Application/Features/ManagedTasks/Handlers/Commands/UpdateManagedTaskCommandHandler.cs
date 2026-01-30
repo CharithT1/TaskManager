@@ -3,8 +3,9 @@ using MediatR;
 using TaskManagement.Application.Features.ManagedTasks.Requests.Commands;
 using TaskManagement.Application.Contracts.Persistence;
 using TaskManagement.Application.DTOs.ManagedTask.Validators;
-using TaskManagement.Application.Exceptions;
 using TaskManagement.Application.Responses;
+using TaskManagement.Application.Common;
+using FluentValidation.Results;
 
 namespace TaskManagement.Application.Features.ManagedTasks.Handlers.Commands
 {
@@ -12,11 +13,15 @@ namespace TaskManagement.Application.Features.ManagedTasks.Handlers.Commands
     {
         private readonly IManagedTaskRepository _managedTaskRepository;
         private readonly IMapper _mapper;
+        private readonly IMapper<ValidationResult, BaseCommandResponse> _serviceErrorMapper;
+        private readonly IMapper<int, BaseCommandResponse> _serviceSuccessMapper;
 
-        public UpdateManagedTaskCommandHandler(IManagedTaskRepository managedTaskRepository, IMapper mapper)
+        public UpdateManagedTaskCommandHandler(IManagedTaskRepository managedTaskRepository, IMapper mapper, IMapper<ValidationResult, BaseCommandResponse> serviceErrorMapper, IMapper<int, BaseCommandResponse> serviceSuccessMapper)
         {
             _managedTaskRepository = managedTaskRepository;
             _mapper = mapper;
+            _serviceErrorMapper = serviceErrorMapper;
+            _serviceSuccessMapper = serviceSuccessMapper;
         }
 
         public async Task<BaseCommandResponse> Handle(UpdateManagedTaskCommand request, CancellationToken cancellationToken)
@@ -25,24 +30,12 @@ namespace TaskManagement.Application.Features.ManagedTasks.Handlers.Commands
             var validationResult = await validator.ValidateAsync(request.managedTaskDto);
             var response = new BaseCommandResponse();
             if (!validationResult.IsValid)
-            {
-                //throw new ValidationException(validationResult);
-                response.IsError = true;
-                response.Message = "Update Failed";
-                response.Errors = validationResult.Errors.Select(a => a.ErrorMessage).ToList();
-
-                return response;
-            }
+                return _serviceErrorMapper.Map(validationResult);
 
             var task = await _managedTaskRepository.GetAsync(request.managedTaskDto.Id);
             _mapper.Map(request.managedTaskDto, task);
             await _managedTaskRepository.UpdateAsync(task);
-
-            response.IsError = false;
-            response.Message = "Update Successful";
-            response.Id = task.Id;
-
-            return response;
+            return _serviceSuccessMapper.Map(task.Id);
         }
     }
 }

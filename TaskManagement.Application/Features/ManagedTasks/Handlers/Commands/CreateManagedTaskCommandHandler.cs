@@ -5,6 +5,8 @@ using TaskManagement.Application.Contracts.Persistence;
 using TaskManagement.Application.Responses;
 using TaskManagement.Domain;
 using TaskManagement.Application.DTOs.ManagedTask.Validators;
+using TaskManagement.Application.Common;
+using FluentValidation.Results;
 
 namespace TaskManagement.Application.Features.ManagedTasks.Handlers.Commands
 {
@@ -12,11 +14,15 @@ namespace TaskManagement.Application.Features.ManagedTasks.Handlers.Commands
     {
         private readonly IManagedTaskRepository _managedTaskRepository;
         private readonly IMapper _mapper;
+        private readonly IMapper<ValidationResult, BaseCommandResponse> _serviceErrorMapper;
+        private readonly IMapper<int, BaseCommandResponse> _serviceSuccessMapper;
 
-        public CreateManagedTaskCommandHandler(IManagedTaskRepository managedTaskRepository, IMapper mapper)
+        public CreateManagedTaskCommandHandler(IManagedTaskRepository managedTaskRepository, IMapper mapper, IMapper<ValidationResult, BaseCommandResponse> serviceErrorMapper, IMapper<int, BaseCommandResponse> serviceSuccessMapper)
         {
             _managedTaskRepository = managedTaskRepository;
             _mapper = mapper;
+            _serviceErrorMapper = serviceErrorMapper;
+            _serviceSuccessMapper = serviceSuccessMapper;
         }
         public async Task<BaseCommandResponse> Handle(CreateManagedTaskCommand request, CancellationToken cancellationToken)
         {
@@ -24,21 +30,11 @@ namespace TaskManagement.Application.Features.ManagedTasks.Handlers.Commands
             var validationResult = await validator.ValidateAsync(request.managedTaskDto);
             var response = new BaseCommandResponse();
             if (!validationResult.IsValid)
-            {
-                //throw new ValidationException(validationResult);
-                response.IsError = true;
-                response.Message = "Creation Failed";
-                response.Errors = validationResult.Errors.Select(a => a.ErrorMessage).ToList();
-                return response;
-            }
+                return _serviceErrorMapper.Map(validationResult);
+
             var task = _mapper.Map<ManagedTask>(request.managedTaskDto);
             task = await _managedTaskRepository.AddAsync(task);
-
-            response.IsError = false;
-            response.Message = "Creation Successful";
-            response.Id = task.Id;
-
-            return response;
+            return _serviceSuccessMapper.Map(task.Id);
         }
     }
 }
