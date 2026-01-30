@@ -1,6 +1,4 @@
-﻿using FluentValidation.Results;
-using System.Threading.Tasks;
-using TaskManagement.Application.Common;
+﻿using TaskManagement.Application.Common;
 using TaskManagement.Application.Responses;
 
 namespace TaskManagement.Application.Mappers
