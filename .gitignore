@@ -4,3 +4,9 @@
 /TaskManagement.Application/bin/Debug/net8.0
 /TaskManagement.Domain/bin/Debug/net8.0
 /TaskManagement.Persistance/bin/Debug/net8.0
+/TaskManagement.API/obj
+/TaskManagement.Application/obj
+/TaskManagement.Domain/obj
+/TaskManagement.Persistance/obj
+/TaskManagement.Web/node_modules
+/TaskManagement.Web/.angular/cache/18.2.21
