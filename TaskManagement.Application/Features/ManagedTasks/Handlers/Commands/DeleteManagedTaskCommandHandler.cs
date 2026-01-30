@@ -23,7 +23,7 @@ namespace TaskManagement.Application.Features.ManagedTasks.Handlers.Commands
 
         public async Task<Unit> Handle(DeleteManagedTaskCommand request, CancellationToken cancellationToken)
         { 
-            var task = await _managedTaskRepository.GetAsync(request.Id);
+            var task = await _managedTaskRepository.GetAsync(request.id);
             await _managedTaskRepository.DeleteAsync(task);
             return Unit.Value;
         }

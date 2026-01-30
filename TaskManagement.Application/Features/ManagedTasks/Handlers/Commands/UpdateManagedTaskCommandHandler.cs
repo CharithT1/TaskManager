@@ -22,7 +22,7 @@ namespace TaskManagement.Application.Features.ManagedTasks.Handlers.Commands
         public async Task<BaseCommandResponse> Handle(UpdateManagedTaskCommand request, CancellationToken cancellationToken)
         {
             var validator = new UpdateManagedTaskDtoValidator(_managedTaskRepository);
-            var validationResult = await validator.ValidateAsync(request.ManagedTaskDto);
+            var validationResult = await validator.ValidateAsync(request.managedTaskDto);
             var response = new BaseCommandResponse();
             if (!validationResult.IsValid)
             {
@@ -34,8 +34,8 @@ namespace TaskManagement.Application.Features.ManagedTasks.Handlers.Commands
                 return response;
             }
 
-            var task = await _managedTaskRepository.GetAsync(request.ManagedTaskDto.Id);
-            _mapper.Map(request.ManagedTaskDto, task);
+            var task = await _managedTaskRepository.GetAsync(request.managedTaskDto.Id);
+            _mapper.Map(request.managedTaskDto, task);
             await _managedTaskRepository.UpdateAsync(task);
 
             response.IsError = false;

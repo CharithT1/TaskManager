@@ -9,8 +9,6 @@ using TaskManagement.Application.Responses;
 
 namespace TaskManagement.Application.Features.ManagedTasks.Requests.Commands
 {
-    public class CreateManagedTaskCommand:IRequest<BaseCommandResponse> 
-    {
-        public CreateManagedTaskDto ManagedTaskDto { get; set; }
-    }
+    public record CreateManagedTaskCommand(CreateManagedTaskDto managedTaskDto) :IRequest<BaseCommandResponse>; 
+
 }

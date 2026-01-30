@@ -7,8 +7,6 @@ using System.Threading.Tasks;
 
 namespace TaskManagement.Application.Features.ManagedTasks.Requests.Commands
 {
-    public class DeleteManagedTaskCommand:IRequest  
-    {
-        public int Id { get; set; }
-    }
+    public record DeleteManagedTaskCommand(int id):IRequest;  
+
 }

@@ -23,7 +23,7 @@ namespace TaskManagement.Application.Features.ManagedTasks.Handlers.Queries
         }
         public async Task<ManagedTaskDto> Handle(GetManagedTaskDetailRequest request, CancellationToken cancellationToken)
         {
-            var task = await _managedTaskRepository.GetManagedTaskAsync(request.Id);
+            var task = await _managedTaskRepository.GetManagedTaskAsync(request.id);
             return _mapper.Map<ManagedTaskDto>(task);
         }
     }

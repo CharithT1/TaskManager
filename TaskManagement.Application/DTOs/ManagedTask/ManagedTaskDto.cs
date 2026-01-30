@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TaskManagement.Application.DTOs.Common;
+﻿using TaskManagement.Application.DTOs.Common;
 using TaskManagement.Application.DTOs.TaskType;
-using TaskManagement.Domain;
 
 namespace TaskManagement.Application.DTOs.ManagedTask
 {

@@ -30,7 +30,7 @@ namespace TaskManagement.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ManagedTaskDto>> Get(int id)
         {
-            var tasks = await _mediator.Send(new GetManagedTaskDetailRequest { Id= id});
+            var tasks = await _mediator.Send(new GetManagedTaskDetailRequest(id));
             return Ok(tasks);
         }
 
@@ -38,7 +38,7 @@ namespace TaskManagement.API.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] CreateManagedTaskDto task)
         {
-            var command = new CreateManagedTaskCommand { ManagedTaskDto = task };
+            var command = new CreateManagedTaskCommand(task);
             var response = await _mediator.Send(command);
             return Ok(response);
         }
@@ -47,7 +47,7 @@ namespace TaskManagement.API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(int id, [FromBody] CreateManagedTaskDto task)
         {
-            var command = new UpdateManagedTaskCommand { ManagedTaskDto = task };
+            var command = new UpdateManagedTaskCommand(task);
             var response = await _mediator.Send(command);
             return Ok(response);
         }
@@ -56,7 +56,7 @@ namespace TaskManagement.API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var command = new DeleteManagedTaskCommand { Id = id };
+            var command = new DeleteManagedTaskCommand(id);
             var response = await _mediator.Send(command);
             return NoContent();
         }
