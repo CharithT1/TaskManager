@@ -6,6 +6,7 @@ import { ReferenceData } from '../shared/reference-data/models/reference-data.mo
 import { DataService } from '../shared/services/data.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { CreateTaskComponent } from './create-task/create-task.component';
 
 @Component({
   selector: 'app-task-manager',
@@ -17,7 +18,7 @@ export class TaskManagerComponent implements OnInit, AfterViewInit {
   public taskTypeList: any[] = [];
   public tasksList: any[] = [];
   public taskSelected: any;
-
+  @ViewChild(CreateTaskComponent) createTask!: CreateTaskComponent;
 
   constructor(private route: ActivatedRoute, private dataService: DataService, private toastr: ToastrService) {
 
@@ -67,6 +68,7 @@ export class TaskManagerComponent implements OnInit, AfterViewInit {
         next: res => {
           this.loadTasksGrid();
           this.toastr.error("Deleted Succesffully!", "Task Manager");
+          this.createTask.resetForm();
         },
         error: err => { console.log(err); }
       });
