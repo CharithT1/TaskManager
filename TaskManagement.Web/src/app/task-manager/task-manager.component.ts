@@ -76,9 +76,10 @@ export class TaskManagerComponent implements OnInit, AfterViewInit {
   loadTasksGrid() {
     this.dataService.getAllByGet("/ManageTask").subscribe({
       next: res => {
-        this.dataSource.data = res as TaskManager[];
-        this.dataSource.sort = this.sort;
         this.tasksList = res as TaskManager[];
+        this.dataSource.data = this.tasksList;
+        this.dataSource.sort = this.sort;
+       
       },
       error: err => { console.log(err); }
     });
