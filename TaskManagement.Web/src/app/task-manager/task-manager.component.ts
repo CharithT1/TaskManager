@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { TaskManager } from './task-manager-model/task-manager.model';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
-import { ReferenceData } from '../shared/models/reference-data.model';
+import { ReferenceData } from '../shared/reference-data/models/reference-data.model';
 import { DataService } from '../shared/services/data.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -18,15 +18,17 @@ export class TaskManagerComponent implements OnInit, AfterViewInit {
   public tasksList: any[] = [];
   public taskSelected: any;
 
+
   constructor(private route: ActivatedRoute, private dataService: DataService, private toastr: ToastrService) {
 
   }
   ngOnInit(): void {
-    this.loadTasksGrid()
+    this.loadTasksGrid();
+    this.taskTypeList = this.route.snapshot.data['referenceData'] as ReferenceData[];
     this.getReferenceData();
   }
 
-  displayedColumns: string[] = ['name',  'taskType', "startDate", "endDate", "actions"];
+  displayedColumns: string[] = ['name', 'taskType', "startDate", "endDate", "actions"];
   dataSource = new MatTableDataSource(this.tasksList);
 
   @ViewChild(MatSort) sort!: MatSort;
@@ -40,8 +42,8 @@ export class TaskManagerComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-    onRowClicked(row: any) {
-    this.taskSelected = row; 
+  onRowClicked(row: any) {
+    this.taskSelected = row;
   }
 
 
@@ -56,12 +58,12 @@ export class TaskManagerComponent implements OnInit, AfterViewInit {
   }
 
   populateForm(record: TaskManager) {
-    this.taskSelected= record;
+    this.taskSelected = record;
   }
 
   deleteTask(task: any) {
     if (confirm("Are you sure your want to delete the task?")) {
-         this.dataService.delete<any>("/ManageTask",task.id).subscribe({
+      this.dataService.delete<any>("/ManageTask", task.id).subscribe({
         next: res => {
           this.loadTasksGrid();
           this.toastr.error("Deleted Succesffully!", "Task Manager");
@@ -83,6 +85,6 @@ export class TaskManagerComponent implements OnInit, AfterViewInit {
   }
 
   onTaskSaveSuccess() {
-      this.loadTasksGrid();
+    this.loadTasksGrid();
   }
 }
