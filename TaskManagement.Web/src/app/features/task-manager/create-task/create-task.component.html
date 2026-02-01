@@ -10,7 +10,7 @@
         <mat-form-field fxFlex="calc(50% - 15px)">
             <mat-label>Task Type</mat-label>
             <mat-select formControlName="taskTypeId" class="form-control form-control-lg">
-                <mat-option value="" disabled>Select</mat-option>
+                <mat-option value="">Select</mat-option>
                 <mat-option *ngFor="let item of taskTypeListList" [value]="item.id">
                     {{item.name}}
                 </mat-option>

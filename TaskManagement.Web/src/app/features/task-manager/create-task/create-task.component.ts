@@ -9,36 +9,15 @@ import { DataService } from '../../../core/services/data.service';
   templateUrl: './create-task.component.html',
   styleUrl: './create-task.component.css'
 })
-export class CreateTaskComponent implements OnInit, OnChanges {
+export class CreateTaskComponent {
   @Input() taskTypeListList: any;
-  @Input() taskSelected: any;
   @Output() taskSaveSuccess = new EventEmitter<void>();
-
-
-  id: number = 0;
-  public createTaskForm: UntypedFormGroup = new UntypedFormGroup({});
+  @Input() createTaskForm!: FormGroup;
 
   constructor(public dataService: DataService, private toastr: ToastrService) {
 
   }
-  ngOnInit(): void {
-    this.createForm();
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['taskSelected']) {
-      this.bindFormData();
-    }
-  }
-
-  bindFormData() {
-    this.createTaskForm.get('id')?.patchValue(this.taskSelected.id);
-    this.createTaskForm.get('name')?.patchValue(this.taskSelected.name);
-    this.createTaskForm.get('description')?.patchValue(this.taskSelected.description);
-    this.createTaskForm.get('taskTypeId')?.patchValue(this.taskSelected.taskTypeId);
-    this.createTaskForm.get('startDate')?.patchValue(this.taskSelected.startDate);
-    this.createTaskForm.get('endDate')?.patchValue(this.taskSelected.endDate);
-  }
+  
   onSubmit() {
     if (this.createTaskForm.valid) {
       const formValue = this.createTaskForm.getRawValue();
@@ -48,17 +27,6 @@ export class CreateTaskComponent implements OnInit, OnChanges {
       else
         this.updateForm(formValue);
     }
-  }
-
-  createForm() {
-    this.createTaskForm = new FormGroup({
-      id: new FormControl<number>(this.id),
-      name: new FormControl<string>('', [Validators.required, Validators.maxLength(50)]),
-      description: new FormControl<string>('', [Validators.maxLength(1000)]),
-      taskTypeId: new FormControl<number| null>(null,Validators.required),
-      startDate: new FormControl<Date | null>(null, [Validators.required]),
-      endDate: new FormControl<Date | null>(null, [Validators.required])
-    });
   }
 
   insertForm(form: any) {
