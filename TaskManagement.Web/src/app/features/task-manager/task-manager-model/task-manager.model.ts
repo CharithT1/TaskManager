@@ -1,4 +1,4 @@
-import { ReferenceData } from "../../shared/models/reference-data.model"
+import { ReferenceData } from "../../../shared/models/reference-data.model"
 
 export class TaskManager {
     id: number = 0

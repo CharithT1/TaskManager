@@ -1,12 +1,12 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { TaskManager } from './task-manager-model/task-manager.model';
+import { TaskManager } from '../task-manager/task-manager-model/task-manager.model';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
-import { ReferenceData } from '../shared/models/reference-data.model';
-import { DataService } from '../core/services/data.service';
+import { ReferenceData } from '../../shared/models/reference-data.model';
+import { DataService } from '../../core/services/data.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { CreateTaskComponent } from './create-task/create-task.component';
+import { CreateTaskComponent } from '../task-manager/create-task/create-task.component';
 
 @Component({
   selector: 'app-task-manager',
