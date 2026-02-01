@@ -36,7 +36,6 @@ export class CreateTaskComponent {
         next: res => {
           if (res != null) {
             if (!res.isError) {
-              this.resetForm();
               this.toastr.success("Inserted Succesffully!", "Task Manager");
               this.taskSaveSuccess.emit();
             } else {
@@ -54,7 +53,6 @@ export class CreateTaskComponent {
         next: res => {
           if (res != null) {
             if (!res.isError) {
-              this.resetForm();
               this.toastr.success("Updated Succesffully!", "Task Manager");
               this.taskSaveSuccess.emit();
             } else {
@@ -65,7 +63,5 @@ export class CreateTaskComponent {
         error: err => { console.log(err); }
       });
   }
-  resetForm() {
-    this.createTaskForm.reset();
-  }
+
 }

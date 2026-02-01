@@ -19,7 +19,6 @@ export class TaskManagerComponent implements OnInit, AfterViewInit {
   public taskTypeList: ReferenceData[] = [];
   public tasksList: TaskManager[] = [];
   public taskSelected: TaskManager = new TaskManager();
-  @ViewChild(CreateTaskComponent) createTask!: CreateTaskComponent;  
   displayedColumns: string[] = ['name', 'taskType', "startDate", "endDate", "actions"];
   dataSource = new MatTableDataSource(this.tasksList);
   @ViewChild(MatSort) sort!: MatSort;
@@ -90,7 +89,7 @@ export class TaskManagerComponent implements OnInit, AfterViewInit {
         next: res => {
           this.loadTasksGrid();
           this.toastr.error("Deleted Succesffully!", "Task Manager");
-          this.createTask.resetForm();
+          this.resetForm();
         },
         error: err => { console.log(err); }
       });
@@ -111,5 +110,10 @@ export class TaskManagerComponent implements OnInit, AfterViewInit {
 
   onTaskSaveSuccess() {
     this.loadTasksGrid();
+    this.resetForm();
+  }
+
+  resetForm() {
+    this.createTaskForm.reset();
   }
 }
