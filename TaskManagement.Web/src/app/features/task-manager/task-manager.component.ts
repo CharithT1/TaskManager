@@ -14,7 +14,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   templateUrl: './task-manager.component.html',
   styleUrl: './task-manager.component.css'
 })
-export class TaskManagerComponent implements OnInit, AfterViewInit {
+export class TaskManagerComponent implements OnInit {
 
   public taskTypeList: ReferenceData[] = [];
   public tasksList: TaskManager[] = [];
@@ -35,9 +35,9 @@ export class TaskManagerComponent implements OnInit, AfterViewInit {
     this.getReferenceData();
   }
 
-  ngAfterViewInit() {
-    this.loadTasksGrid()
-  }
+  // ngAfterViewInit() {
+  //   this.loadTasksGrid()
+  // }
 
   createForm() {
     this.createTaskForm = new FormGroup({
@@ -88,8 +88,9 @@ export class TaskManagerComponent implements OnInit, AfterViewInit {
       this.dataService.delete<any>("/ManageTask", task.id).subscribe({
         next: res => {
           this.loadTasksGrid();
-          this.toastr.error("Deleted Succesffully!", "Task Manager");
-          this.resetForm();
+          this.toastr.error("Deleted Succesffully!", "Task Manager");       
+          this.taskSelected= new TaskManager();
+          this.bindFormData();
         },
         error: err => { console.log(err); }
       });
@@ -101,8 +102,7 @@ export class TaskManagerComponent implements OnInit, AfterViewInit {
       next: res => {
         this.tasksList = res as TaskManager[];
         this.dataSource.data = this.tasksList;
-        this.dataSource.sort = this.sort;
-       
+        this.dataSource.sort = this.sort;       
       },
       error: err => { console.log(err); }
     });
@@ -110,10 +110,7 @@ export class TaskManagerComponent implements OnInit, AfterViewInit {
 
   onTaskSaveSuccess() {
     this.loadTasksGrid();
-    this.resetForm();
-  }
-
-  resetForm() {
-    this.createTaskForm.reset();
+         this.taskSelected= new TaskManager();
+          this.bindFormData();
   }
 }

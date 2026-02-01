@@ -3,7 +3,7 @@
         <mat-form-field appearance="outline">
             <mat-label>Task Name</mat-label>
             <input matInput formControlName="name" maxlength="100" class="form-control form-control-lg">
-            <mat-error class="error-msg">required</mat-error>
+            <mat-error *ngIf="(createTaskForm.get('name')?.touched && createTaskForm.get('name')?.invalid && createTaskForm.get('name')?.errors?.['required'])" class="error-msg">required</mat-error>
         </mat-form-field>
     </div>
     <div class="mb-3">
@@ -35,7 +35,6 @@
             <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #startDatePicker></mat-datepicker>
         </mat-form-field>
-
     </div>
     <div class="mb-3">
         <label>End Date</label>
