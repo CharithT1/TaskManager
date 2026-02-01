@@ -2,8 +2,8 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { TaskManager } from './task-manager-model/task-manager.model';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
-import { ReferenceData } from '../shared/reference-data/models/reference-data.model';
-import { DataService } from '../shared/services/data.service';
+import { ReferenceData } from '../shared/models/reference-data.model';
+import { DataService } from '../core/services/data.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { CreateTaskComponent } from './create-task/create-task.component';
@@ -18,21 +18,20 @@ export class TaskManagerComponent implements OnInit, AfterViewInit {
   public taskTypeList: any[] = [];
   public tasksList: any[] = [];
   public taskSelected: any;
-  @ViewChild(CreateTaskComponent) createTask!: CreateTaskComponent;
+  @ViewChild(CreateTaskComponent) createTask!: CreateTaskComponent;  
+  displayedColumns: string[] = ['name', 'taskType', "startDate", "endDate", "actions"];
+  dataSource = new MatTableDataSource(this.tasksList);
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private route: ActivatedRoute, private dataService: DataService, private toastr: ToastrService) {
 
   }
+
   ngOnInit(): void {
     this.loadTasksGrid();
     this.taskTypeList = this.route.snapshot.data['referenceData'] as ReferenceData[];
     this.getReferenceData();
   }
-
-  displayedColumns: string[] = ['name', 'taskType', "startDate", "endDate", "actions"];
-  dataSource = new MatTableDataSource(this.tasksList);
-
-  @ViewChild(MatSort) sort!: MatSort;
 
   ngAfterViewInit() {
     this.loadTasksGrid()

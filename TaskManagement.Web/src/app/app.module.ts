@@ -19,7 +19,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { BasicAuthInterceptor } from './shared/interceptors/basic-auth.interceptor';
+import { BasicAuthInterceptor } from './core/interceptors/basic-auth.interceptor';
 
 @NgModule({
   declarations: [

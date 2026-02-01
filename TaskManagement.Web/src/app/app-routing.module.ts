@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TaskManagerComponent } from './task-manager/task-manager.component';
-import { ReferenceDataResolver } from './shared/reference-data/reference-data-resolver';
+import { ReferenceDataResolver } from './core/resolvers/reference-data-resolver';
 
 const routes: Routes = [
   {
