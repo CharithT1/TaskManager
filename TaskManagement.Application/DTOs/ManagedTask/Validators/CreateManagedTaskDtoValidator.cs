@@ -19,10 +19,10 @@ namespace TaskManagement.Application.DTOs.ManagedTask.Validators
                 .MaximumLength(1000).WithMessage("{PropertyName} must not exceed 1000 characters");
 
             RuleFor(a => a.StartDate)
-                .LessThan(a => a.EndDate).WithMessage("{PropertyName} must not exceed {ComparisonValue}");
+                .LessThan(a => a.EndDate).WithMessage("{PropertyName} must not exceed {ComparisonValue:yyyy-MM-dd}");
 
             RuleFor(a => a.EndDate)
-                .GreaterThan(a => a.StartDate).WithMessage("{PropertyName} must be after {ComparisonValue}");
+                .GreaterThan(a => a.StartDate).WithMessage("{PropertyName} must be after {ComparisonValue:yyyy-MM-dd}");
 
             RuleFor(a => a.TaskTypeId)
                 .GreaterThan(0)
