@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { DataService } from '../../../core/services/data.service';
 
@@ -15,7 +15,7 @@ export class CreateTaskComponent implements OnInit, OnChanges {
   @Output() taskSaveSuccess = new EventEmitter<void>();
 
 
-  id: Number = 0;
+  id: number = 0;
   public createTaskForm: UntypedFormGroup = new UntypedFormGroup({});
 
   constructor(public dataService: DataService, private toastr: ToastrService) {
@@ -51,13 +51,13 @@ export class CreateTaskComponent implements OnInit, OnChanges {
   }
 
   createForm() {
-    this.createTaskForm = new UntypedFormGroup({
-      id: new UntypedFormControl(this.id),
-      name: new UntypedFormControl('', [Validators.required, Validators.maxLength(50)]),
-      description: new UntypedFormControl('', [Validators.maxLength(1000)]),
-      taskTypeId: new UntypedFormControl('', Validators.required),
-      startDate: new UntypedFormControl(null, [Validators.required]),
-      endDate: new UntypedFormControl(null, [Validators.required])
+    this.createTaskForm = new FormGroup({
+      id: new FormControl<number>(this.id),
+      name: new FormControl<string>('', [Validators.required, Validators.maxLength(50)]),
+      description: new FormControl<string>('', [Validators.maxLength(1000)]),
+      taskTypeId: new FormControl<number| null>(null,Validators.required),
+      startDate: new FormControl<Date | null>(null, [Validators.required]),
+      endDate: new FormControl<Date | null>(null, [Validators.required])
     });
   }
 
