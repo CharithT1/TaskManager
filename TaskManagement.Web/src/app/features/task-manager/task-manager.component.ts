@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TaskManager } from '../task-manager/task-manager-model/task-manager.model';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
@@ -6,7 +6,6 @@ import { ReferenceData } from '../../shared/models/reference-data.model';
 import { DataService } from '../../core/services/data.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { CreateTaskComponent } from '../task-manager/create-task/create-task.component';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -34,10 +33,6 @@ export class TaskManagerComponent implements OnInit {
     this.taskTypeList = this.route.snapshot.data['referenceData'] as ReferenceData[];
     this.getReferenceData();
   }
-
-  // ngAfterViewInit() {
-  //   this.loadTasksGrid()
-  // }
 
   createForm() {
     this.createTaskForm = new FormGroup({
