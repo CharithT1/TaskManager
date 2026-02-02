@@ -1,8 +1,7 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormControl, FormGroup, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { DataService } from '../../../core/services/data.service';
-
 
 @Component({
   selector: 'app-create-task',
@@ -14,7 +13,7 @@ export class CreateTaskComponent {
   @Output() taskSaveSuccess = new EventEmitter<void>();
   @Input() createTaskForm!: FormGroup;
 
-  constructor(public dataService: DataService, private toastr: ToastrService) {
+  constructor(private dataService: DataService, private toastr: ToastrService) {
 
   }
   
