@@ -39,7 +39,7 @@ export class TaskManagerComponent implements OnInit {
       id: new FormControl<number>(this.taskSelected.id),
       name: new FormControl<string>('', [Validators.required, Validators.maxLength(50)]),
       description: new FormControl<string>('', [Validators.maxLength(1000)]),
-      taskTypeId: new FormControl<number | ''>('',Validators.required),
+      taskTypeId: new FormControl<number | ''>('', Validators.required),
       startDate: new FormControl<Date | null>(null, [Validators.required]),
       endDate: new FormControl<Date | null>(null, [Validators.required])
     });
@@ -83,8 +83,8 @@ export class TaskManagerComponent implements OnInit {
       this.dataService.delete<any>("/ManageTask", task.id).subscribe({
         next: res => {
           this.loadTasksGrid();
-          this.toastr.error("Deleted Succesffully!", "Task Manager");       
-          this.taskSelected= new TaskManager();
+          this.toastr.error("Deleted Succesffully!", "Task Manager");
+          this.taskSelected = new TaskManager();
           this.bindFormData();
         },
         error: err => { console.log(err); }
@@ -97,7 +97,7 @@ export class TaskManagerComponent implements OnInit {
       next: res => {
         this.tasksList = res as TaskManager[];
         this.dataSource.data = this.tasksList;
-        this.dataSource.sort = this.sort;       
+        this.dataSource.sort = this.sort;
       },
       error: err => { console.log(err); }
     });
@@ -105,7 +105,7 @@ export class TaskManagerComponent implements OnInit {
 
   onTaskSaveSuccess() {
     this.loadTasksGrid();
-         this.taskSelected= new TaskManager();
-          this.bindFormData();
+    this.taskSelected = new TaskManager();
+    this.bindFormData();
   }
 }
