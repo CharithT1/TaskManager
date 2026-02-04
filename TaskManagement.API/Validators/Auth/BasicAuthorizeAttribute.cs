@@ -20,8 +20,6 @@ namespace TaskManagement.API.Validators.Auth
         private class BasicAuthorizeAttributeImpl : Attribute, IAsyncResourceFilter, IAuthorizationRequirement
         {
             private readonly IOptions<AuthConfigurations> _authConfig;
-
-
             public BasicAuthorizeAttributeImpl(IOptions<AuthConfigurations> authConfig)
             {
                 _authConfig = authConfig;

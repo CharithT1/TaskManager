@@ -2,6 +2,7 @@
 using MediatR;
 using TaskManagement.Application.Features.ManagedTasks.Requests.Commands;
 using TaskManagement.Application.Contracts.Persistence;
+using TaskManagement.Application.Exceptions;
 
 namespace TaskManagement.Application.Features.ManagedTasks.Handlers.Commands
 {
@@ -19,6 +20,8 @@ namespace TaskManagement.Application.Features.ManagedTasks.Handlers.Commands
         public async Task<Unit> Handle(DeleteManagedTaskCommand request, CancellationToken cancellationToken)
         { 
             var task = await _managedTaskRepository.GetAsync(request.id);
+            if (task == null) 
+                throw new NotFoundException(nameof(ManagedTasks), request.id);
             await _managedTaskRepository.DeleteAsync(task);
             return Unit.Value;
         }

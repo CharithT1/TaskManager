@@ -1,3 +1,4 @@
+using TaskManagement.API.ExceptionHandler;
 using TaskManagement.Application;
 using TaskManagement.Persistance;
 
@@ -10,6 +11,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddTransient<GlobalExceptionMiddleware>();
 
 builder.Services.AddCors(options =>
 {
@@ -21,6 +23,8 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+app.UseMiddleware<GlobalExceptionMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
