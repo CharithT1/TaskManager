@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { DataService } from '../../../core/services/data.service';
+import { ReferenceData } from '../../../shared/models/reference-data.model';
 
 @Component({
   selector: 'app-create-task',
@@ -9,7 +10,7 @@ import { DataService } from '../../../core/services/data.service';
   styleUrl: './create-task.component.css'
 })
 export class CreateTaskComponent {
-  @Input() taskTypeListList: any;
+  @Input() taskTypeListList !: ReferenceData[];
   @Output() taskSaveSuccess = new EventEmitter<void>();
   @Input() createTaskForm!: FormGroup;
 
