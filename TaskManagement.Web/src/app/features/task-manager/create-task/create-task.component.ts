@@ -17,7 +17,7 @@ export class CreateTaskComponent {
   constructor(private dataService: DataService, private toastr: ToastrService) {
 
   }
-  
+
   onSubmit() {
     if (this.createTaskForm.valid) {
       const formValue = this.createTaskForm.getRawValue();
@@ -33,16 +33,7 @@ export class CreateTaskComponent {
     this.dataService
       .add<any>("/ManageTask", form)
       .subscribe({
-        next: res => {
-          if (res != null) {
-            if (!res.isError) {
-              this.toastr.success("Inserted Succesffully!", "Task Manager");
-              this.taskSaveSuccess.emit();
-            } else {
-              this.toastr.error(res.errors[0], "Error : Task Manager");
-            }
-          }
-        },
+        next: res => this.callSuccess(res, form),
         error: err => { console.log(err); }
       });
   }
@@ -50,18 +41,19 @@ export class CreateTaskComponent {
   updateForm(form: any) {
     this.dataService
       .put<any>("/ManageTask", form).subscribe({
-        next: res => {
-          if (res != null) {
-            if (!res.isError) {
-              this.toastr.success("Updated Succesffully!", "Task Manager");
-              this.taskSaveSuccess.emit();
-            } else {
-               this.toastr.error(res.errors[0], "Error : Task Manager");
-            }
-          }
-        },
+        next: res => this.callSuccess(res, form),
         error: err => { console.log(err); }
       });
   }
 
+  callSuccess(result: any, form: any) {
+    if (result != null) {
+      if (!result.isError) {
+        this.toastr.success(`${form.id > 0 ? 'Updated' : 'Inserted'} Succesffully!`, "Task Manager");
+        this.taskSaveSuccess.emit();
+      } else {
+        this.toastr.error(result.errors[0], "Error : Task Manager");
+      }
+    }
+  }
 }

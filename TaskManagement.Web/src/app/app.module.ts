@@ -42,7 +42,6 @@ import { BasicAuthInterceptor } from './core/interceptors/basic-auth.interceptor
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule
-
   ],
   providers: [
     provideAnimationsAsync(),
